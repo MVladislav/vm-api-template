@@ -1,0 +1,26 @@
+fastapi
+starlette
+pydantic
+pydantic[email]
+uvicorn
+gunicorn
+
+coloredlogs
+verboselogs
+string-color
+
+python-jose
+pyjwt
+passlib
+bcrypt
+
+pyotp
+
+pillow
+qrcode
+
+pymongo
+
+# dev
+pytest
+requests
