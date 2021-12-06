@@ -11,7 +11,7 @@
     - [development mode:](#development-mode)
     - [production mode:](#production-mode)
   - [install/startup](#installstartup)
-  - [run test](#run-test)
+    - [run test](#run-test)
     - [shell](#shell)
       - [debug](#debug)
     - [docker](#docker)
@@ -42,7 +42,7 @@ $cp .env_template_prod .env
 
 ## install/startup
 
-## run test
+### run test
 
 ```sh
 $./tests-start.sh
