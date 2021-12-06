@@ -7,6 +7,5 @@
   "python.formatting.autopep8Args": ["--max-line-length", "127"],
   "python.autoComplete.addBrackets": true,
   "python.analysis.autoImportCompletions": true,
-  "standard.enable": false,
-  "python.pythonPath": "venv/bin/python"
+  "standard.enable": false
 }

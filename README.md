@@ -7,13 +7,10 @@
 ---
 
 - [Python CLI template](#python-cli-template)
-  - [create `.env` file](#create-env-file)
-    - [development mode:](#development-mode)
-    - [production mode:](#production-mode)
-  - [install/startup](#installstartup)
-    - [docker](#docker)
-    - [shell](#shell)
-    - [DEBUG](#debug)
+  - [TODO:](#todo)
+  - [on clone this project](#on-clone-this-project)
+  - [code quality and git](#code-quality-and-git)
+    - [pre-commit](#pre-commit)
   - [sources](#sources)
     - [code](#code)
     - [python](#python)
@@ -22,152 +19,64 @@
 
 ---
 
+## TODO:
+
+- [ ] add ci-cd workflow
+- [ ] add email template usage
+- [ ] add default frontend
+- [ ] ...
+
+---
+
+WORK IN PROGRESS
+
 an template to copy to implement python with `setup.py` and `fastapi` for **api**.
 
 ---
 
-## create `.env` file
+## on clone this project
 
-### development mode:
+change to your project name:
 
-```env
-LICENSE=GNU AGPLv3
-AUTHOR=MVladislav
-AUTHOR_EMAIL=info@mvladislav.online
-
-PROJECT_NAME=vm_api_template
-# PROD | KONS
-ENV_MODE=KONS
-VERSION=0.0.1
-# NOTICE | SPAM | DEBUG | VERBOSE | INFO | NOTICE | WARNING | SUCCESS | ERROR | CRITICAL
-LOGGING_LEVEL=DEBUG
-# 0 - 4
-LOGGING_VERBOSE=3
-
-PROTOCOL=http
-HOST=127.0.0.1
-PORT=8000
-ALLOW_CREDENTIALS=true
-ALLOWED_METHODES=OPTIONS,GET
-ALLOWED_HEADERS=*
-
-API_PREFIX=/api/v1
-
-TOKEN_API_NAME=x-access-token
-# openssl rand -hex 64
-SECRET_KEY="c1aa1118518050c4173c8c991e407c5a97f61010e2d27399568b7fcacec9892f7b34fcf3e32ba30ae6fb64c1219625d915b7cdda253a5888f1ce305194030f75"
-ALGORITHM=HS512
-ACCESS_TOKEN_EXPIRE_MINUTES=30
-
-ACCOUNT_REGISTER_EXPIRE_MINUTES=5
-
-TOTP_DIGITS=6
-TOTP_INTERVAL=30
-TOTP_VALIDE_WINDOW=0
-
-QR_VERSION=1
-QR_BOX_SIZE=10
-QR_BORDER=5
-# QR_FACTORY=none
-QR_FILLED=false
-QR_FIT=true
-
-# mongodb | mongodb+srv
-DB_PROTOCOL=mongodb
-# DB_HOST=mongo
-DB_HOST=localhost
-DB_PORT=27017
-DB_SCHEMA=test01
-# DB_URL=none
-# DB_USER=admin
-# DB_PASSWORD=swordfish
+```sh
+$sed -i "s|vm_api|<PROJECT_NAME>|g" .github/workflows/docker-build.yml 2>/dev/null
+$sed -i "s|vm_api|<PROJECT_NAME>|g" .github/workflows/python-dev.yml 2>/dev/null
+$sed -i "s|vm_api|<PROJECT_NAME>|g" scripts/setup-dev.sh 2>/dev/null
+$sed -i "s|vm_api|<PROJECT_NAME>|g" scripts/setup.sh 2>/dev/null
+$sed -i "s|vm_api|<PROJECT_NAME>|g" app/utils/config.py 2>/dev/null
+$sed -i "s|vm_api|<PROJECT_NAME>|g" .env_project 2>/dev/null
+$sed -i "s|vm_api|<PROJECT_NAME>|g" docker-compose.yaml 2>/dev/null
+$sed -i "s|vm_api|<PROJECT_NAME>|g" Dockerfile 2>/dev/null
+$sed -i "s|vm_api|<PROJECT_NAME>|g" pyproject.toml 2>/dev/null
+$sed -i "s|vm_api|<PROJECT_NAME>|g" setup.cfg 2>/dev/null
+$sed -i "s|vm_api|<PROJECT_NAME>|g" setup.py 2>/dev/null
 ```
 
-### production mode:
+update version:
 
-```env
-LICENSE=GNU AGPLv3
-AUTHOR=MVladislav
-AUTHOR_EMAIL=info@mvladislav.online
-
-PROJECT_NAME=vm_api_template
-# PROD | KONS
-ENV_MODE=PROD
-VERSION=0.0.1
-# NOTICE | SPAM | DEBUG | VERBOSE | INFO | NOTICE | WARNING | SUCCESS | ERROR | CRITICAL
-LOGGING_LEVEL=INFO
-# 0 - 4
-LOGGING_VERBOSE=2
-
-PROTOCOL=http
-HOST=127.0.0.1
-PORT=8000
-ALLOW_CREDENTIALS=true
-ALLOWED_METHODES=OPTIONS,GET
-ALLOWED_HEADERS=*
-
-API_PREFIX=/api/v1
-
-TOKEN_API_NAME=x-access-token
-# openssl rand -hex 64
-SECRET_KEY="<ADD SECRET HERE>"
-ALGORITHM=HS512
-ACCESS_TOKEN_EXPIRE_MINUTES=43800
-
-ACCOUNT_REGISTER_EXPIRE_MINUTES=5
-
-TOTP_DIGITS=6
-TOTP_INTERVAL=30
-TOTP_VALIDE_WINDOW=0
-
-QR_VERSION=1
-QR_BOX_SIZE=10
-QR_BORDER=5
-# QR_FACTORY=none
-QR_FILLED=false
-QR_FIT=true
-
-# mongodb | mongodb+srv
-DB_PROTOCOL=mongodb
-DB_HOST=mongo
-DB_PORT=27017
-DB_SCHEMA=test01
-# DB_URL=none
-DB_USER=admin
-DB_PASSWORD=swordfish
+```sh
+$sed -i "s|0.0.1|<NEW_VERSION>|g" .github/workflows/docker-build.yml 2>/dev/null
+$sed -i "s|0.0.1|<NEW_VERSION>|g" .github/workflows/python-dev.yml 2>/dev/null
+$sed -i "s|0.0.1|<NEW_VERSION>|g" app/utils/config.py 2>/dev/null
+$sed -i "s|0.0.1|<NEW_VERSION>|g" .env_project 2>/dev/null
+$sed -i "s|0.0.1|<NEW_VERSION>|g" docker-compose.yaml 2>/dev/null
+$sed -i "s|0.0.1|<NEW_VERSION>|g" Dockerfile 2>/dev/null
+$sed -i "s|0.0.1|<NEW_VERSION>|g" pyproject.toml 2>/dev/null
+$sed -i "s|0.0.1|<NEW_VERSION>|g" setup.cfg 2>/dev/null
+$sed -i "s|0.0.1|<NEW_VERSION>|g" setup.py 2>/dev/null
 ```
 
 ---
 
-## install/startup
+## code quality and git
 
-### docker
+### pre-commit
 
-run **docker-compose** `build` and `up`
-
-```sh
-$DOCKER_BUILDKIT=1 docker-compose build
-$DOCKER_BUILDKIT=1 docker-compose up -d
-```
-
-### shell
-
-> `starlette` must be installed before project can be installed
->
-> `setup.py` looks into `app/utils/config.py` which use `config` from `starlette`
+run:
 
 ```sh
-$pip3 install starlette && pip3 install .
-$gunicorn -w 1 -k uvicorn.workers.UvicornWorker app.main:main
-```
-
-### DEBUG
-
-```sh
-$python3 -m venv ./venv
-$source venv/bin/activate
-$pip3 install starlette && pip3 install --editable .
-$uvicorn app.main:main --reload
+$git config --local core.hooksPath .git/hooks
+$pre-commit install
 ```
 
 ---
