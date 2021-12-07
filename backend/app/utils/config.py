@@ -21,7 +21,7 @@ class Settings(BaseSettings):
     #
     #
     # --------------------------------------------------------------------------
-    PROJECT_NAME: str = config_project("PROJECT_NAME", default="vm_cli")
+    PROJECT_NAME: str = config_project("PROJECT_NAME", default="vm_api")
     VERSION: str = config_project("VERSION", default="0.0.1")
     ENV_MODE: str = config("ENV_MODE", default="KONS")
     # CRITICAL | ERROR | SUCCESS | WARNING | NOTICE | INFO | VERBOSE | DEBUG | SPAM | NOTSET
@@ -143,12 +143,12 @@ class Settings(BaseSettings):
     class Config:
         case_sensitive = True
 
+    # --------------------------------------------------------------------------
+    #
+    #
+    #
+    # --------------------------------------------------------------------------
 
-    # --------------------------------------------------------------------------
-    #
-    #
-    #
-    # --------------------------------------------------------------------------
     def print(self) -> None:
         if self.LOGGING_LEVEL == logging.getLevelName(logging.DEBUG):
             print()

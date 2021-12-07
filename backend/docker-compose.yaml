@@ -62,7 +62,7 @@ services:
         mode: host
     volumes:
       - /etc/localtime:/etc/localtime:ro
-      # - ./app/:/vm_api/app/
+      # - ./app/:/app/app/
     command: uvicorn app.main:main --reload --workers 1 --host 0.0.0.0 --port 8000
       --factory
     networks:
