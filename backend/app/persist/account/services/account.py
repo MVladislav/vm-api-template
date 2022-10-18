@@ -4,6 +4,7 @@ from typing import Union
 
 import verboselogs
 from bson.objectid import ObjectId
+from pydantic.networks import EmailStr
 
 from app.db.mongoDb import DBConnection
 from app.persist.account.models.user import UserEntity, UserStatusEnum
@@ -49,7 +50,7 @@ async def registration(
     surname: Union[str, None] = params.surname
     username: Union[str, None] = params.username
     password: Union[str, None] = params.password
-    email: Union[str, None] = params.email
+    email: Union[EmailStr, None] = params.email
     try:
         if (
             name is not None and
@@ -76,19 +77,23 @@ async def registration(
                         )  # here defined in minutes
                     ).timestamp(
                     )
-                    # create and save the user
-                    user = UserEntity(
-                        name=name,
-                        surname=surname,
-                        username=username,
-                        password=get_password_hash(password),
-                        totpToken=secret.secret if secret is not None and
-                        settings.TOTP_ACTIVE else None,
-                        accountExpireDate=datetime.fromtimestamp(expireDate),
-                        email=email,
-                        status=UserStatusEnum.NEW,
-                    )
-                    conn.insert_one(obj=user, table_name=DB_TABLE)
+
+                    password_hast_tmp = get_password_hash(password)
+
+                    if password_hast_tmp is not None:
+                        # create and save the user
+                        user = UserEntity(
+                            name=name,
+                            surname=surname,
+                            username=username,
+                            password=password_hast_tmp,
+                            totpToken=secret.secret if secret is not None and
+                            settings.TOTP_ACTIVE else None,
+                            accountExpireDate=datetime.fromtimestamp(expireDate),
+                            email=email,
+                            status=UserStatusEnum.NEW,
+                        )
+                        conn.insert_one(obj=user, table_name=DB_TABLE)
                     # if user is created/saved, create the qrcode for the user
                     # for the 2FA
                     if user is not None:
@@ -201,8 +206,6 @@ async def registration(
     except Exception as e:
         logging.log(logging.CRITICAL, e, exc_info=True)
     return None
-
-
 
 
 # ------------------------------------------------------------------------------
@@ -434,8 +437,6 @@ async def login(params: RequestLoginSchema) -> Union[ResponseHolderObject, None]
     except Exception as e:
         logging.log(logging.CRITICAL, e, exc_info=True)
     return None
-
-
 
 
 # ------------------------------------------------------------------------------

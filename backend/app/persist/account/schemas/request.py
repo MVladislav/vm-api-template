@@ -5,6 +5,7 @@
 from typing import Optional
 
 from pydantic.main import BaseModel
+from pydantic.networks import EmailStr
 
 
 # ------------------------------------------------------------------------------
@@ -20,7 +21,7 @@ class RequestRegistrationSchema(BaseModel):
     surname: str
     username: str
     password: str
-    email: str
+    email: EmailStr
 
     class Config:
         schema_extra = {

@@ -20,8 +20,6 @@ class UserStatusEnum(str, Enum):
     NEW = ("NEW",)
 
 
-
-
 # ------------------------------------------------------------------------------
 #
 #
@@ -33,7 +31,7 @@ class UserEntity(MongoModel):
     username: str = Field(unique=True)
     password: str = Field()
     email: EmailStr = Field()
-    token: Optional[str] = Field()
+    token: Optional[str] = Field(default=None)
     totpToken: Optional[str] = Field()
     accountExpireDate: Optional[datetime] = Field()
     status: UserStatusEnum = Field()

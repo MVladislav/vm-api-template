@@ -3,6 +3,7 @@ from enum import Enum
 from typing import Any, List, Optional, Union
 
 from pydantic import BaseModel
+from pydantic.fields import Field
 
 from app.schemas.response import ResponseSchema
 from app.utils.logHelper import LoggingMsgType, loggingMsgHandler
@@ -41,11 +42,9 @@ class ResponseHolderObject(BaseModel):
 
 
 class ResponseHandlerObject(BaseModel):
-    msgType: MsgTypeEnum
-    msg: Optional[Any]
-    errorType: Optional[ErrorTypeEnum]
-
-
+    msgType: MsgTypeEnum = Field()
+    msg: Optional[Any] = Field(default=None)
+    errorType: Optional[ErrorTypeEnum] = Field(default=None)
 
 
 # ------------------------------------------------------------------------------
@@ -78,8 +77,6 @@ def responseHandler(
     except Exception as e:
         logging.log(logging.CRITICAL, e, exc_info=True)
     return result
-
-
 
 
 # ------------------------------------------------------------------------------

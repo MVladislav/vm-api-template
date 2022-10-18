@@ -39,29 +39,42 @@ an template to copy to implement python with `setup.py` and `fastapi` for **api*
 change to your project name:
 
 ```sh
+$sed -i "s|vm_api|<PROJECT_NAME>|g" ./backend/scripts/setup-dev.sh 2>/dev/null
+$sed -i "s|vm_api|<PROJECT_NAME>|g" ./backend/scripts/setup.sh 2>/dev/null
+$sed -i "s|vm_api|<PROJECT_NAME>|g" ./backend/app/utils/config.py 2>/dev/null
 $sed -i "s|vm_api|<PROJECT_NAME>|g" ./backend/.env 2>/dev/null
 $sed -i "s|vm_api|<PROJECT_NAME>|g" ./backend/.env_project 2>/dev/null
 $sed -i "s|vm_api|<PROJECT_NAME>|g" ./backend/.env_template_kons 2>/dev/null
 $sed -i "s|vm_api|<PROJECT_NAME>|g" ./backend/.env_template_prod 2>/dev/null
 $sed -i "s|vm_api|<PROJECT_NAME>|g" ./backend/docker-compose.yaml 2>/dev/null
+$sed -i "s|vm_api|<PROJECT_NAME>|g" ./backend/Dockerfile 2>/dev/null
 $sed -i "s|vm_api|<PROJECT_NAME>|g" ./backend/pyproject.toml 2>/dev/null
 $sed -i "s|vm_api|<PROJECT_NAME>|g" ./backend/README.md 2>/dev/null
 $sed -i "s|vm_api|<PROJECT_NAME>|g" ./backend/setup.cfg 2>/dev/null
 $sed -i "s|vm_api|<PROJECT_NAME>|g" ./backend/setup.py 2>/dev/null
-$sed -i "s|vm_api|<PROJECT_NAME>|g" ./backend/scripts/setup.sh 2>/dev/null
-$sed -i "s|vm_api|<PROJECT_NAME>|g" ./backend/scripts/setup-dev.sh 2>/dev/null
-$sed -i "s|vm_api|<PROJECT_NAME>|g" ./backend/app/utils/config.py 2>/dev/null
+
+$mv app <PROJECT_NAME>
+$sed -i "s|app\b|<PROJECT_NAME>|g" ./backend/.gitignore 2>/dev/null
+$sed -i "s|app\b|<PROJECT_NAME>|g" ./backend/.dockerignore 2>/dev/null
+$sed -i "s|app\b|<PROJECT_NAME>|g" .pre-commit-config.yaml 2>/dev/null
+$sed -i "s|app\b|<PROJECT_NAME>|g" ./backend/docker-compose.yaml 2>/dev/null
+$sed -i "s|app\b|<PROJECT_NAME>|g" ./backend/pyproject.toml 2>/dev/null
+$sed -i "s|app\b|<PROJECT_NAME>|g" ./backend/setup.cfg 2>/dev/null
+$sed -i "s|app\b|<PROJECT_NAME>|g" ./backend/setup.py 2>/dev/null
+$sed -i "s|app\b|<PROJECT_NAME>|g" ./backend/tox.ini 2>/dev/null
+$sed -i "s|app\b|<PROJECT_NAME>|g" ./backend/<PROJECT_NAME>/main.py 2>/dev/null
 ```
 
 update version:
 
 ```sh
-$sed -i "s|0.0.1|<NEW_VERSION>|g" backend/.env_project 2>/dev/null
-$sed -i "s|0.0.1|<NEW_VERSION>|g" backend/Dockerfile 2>/dev/null
-$sed -i "s|0.0.1|<NEW_VERSION>|g" backend/pyproject.toml 2>/dev/null
-$sed -i "s|0.0.1|<NEW_VERSION>|g" backend/setup.cfg 2>/dev/null
-$sed -i "s|0.0.1|<NEW_VERSION>|g" backend/setup.py 2>/dev/null
-$sed -i 's|"0.0.1"|"<NEW_VERSION>"|g' backend/app/utils/config.py 2>/dev/null
+$sed -i 's|"0.0.1"|"<NEW_VERSION>"|g' ./backend/app/utils/config.py 2>/dev/null
+$sed -i "s|0.0.1|<NEW_VERSION>|g" ./backend/.env_project 2>/dev/null
+$sed -i "s|0.0.1|<NEW_VERSION>|g" ./backend/docker-compose.yaml 2>/dev/null
+$sed -i "s|0.0.1|<NEW_VERSION>|g" ./backend/Dockerfile 2>/dev/null
+$sed -i "s|0.0.1|<NEW_VERSION>|g" ./backend/pyproject.toml 2>/dev/null
+$sed -i "s|0.0.1|<NEW_VERSION>|g" ./backend/setup.cfg 2>/dev/null
+$sed -i "s|0.0.1|<NEW_VERSION>|g" ./backend/setup.py 2>/dev/null
 ```
 
 ---

@@ -1,6 +1,6 @@
 import logging
 from pathlib import Path
-from typing import List, Union
+from typing import List, Optional
 
 import verboselogs
 from pydantic import BaseSettings, EmailStr
@@ -49,7 +49,7 @@ class Settings(BaseSettings):
     #
     # --------------------------------------------------------------------------
     # It is required to do a free registration and create a license key
-    GEO_LICENSE_KEY: Union[str, None] = config("GEO_LICENSE_KEY", default=None)
+    GEO_LICENSE_KEY: Optional[str] = config("GEO_LICENSE_KEY", default=None)
     # docs: https://dev.maxmind.com/geoip/geoip2/geolite2/
     GEO_LITE_TAR_FILE_URL = (
         f"https://download.maxmind.com/app/geoip_download"
@@ -119,7 +119,7 @@ class Settings(BaseSettings):
     DB_PORT: int = config("DB_PORT", cast=int, default=27017)
     DB_SCHEMA: str = config("DB_SCHEMA", default=None)
     # mongodb+srv://<username>:<password>@<cluster-name>.mongodb.net/myFirstDatabase
-    DB_URL: Union[str, None] = config("DB_URL", default=None)
+    DB_URL: Optional[str] = config("DB_URL", default=None)
     DB_USER: str = config("DB_USER", default=None)
     DB_PASSWORD: str = config("DB_PASSWORD", default=None)
     # --------------------------------------------------------------------------
@@ -127,13 +127,13 @@ class Settings(BaseSettings):
     #
     #
     # --------------------------------------------------------------------------
-    SMTP_TLS: bool = config("SMTP_TLS", cast=bool, default=None)
-    SMTP_PORT: Union[int, None] = config("SMTP_PORT", cast=int, default=None)
-    SMTP_HOST: Union[str, None] = config("SMTP_HOST", default=None)
-    SMTP_USER: Union[str, None] = config("SMTP_USER", default=None)
-    SMTP_PASSWORD: Union[str, None] = config("SMTP_PASSWORD", default=None)
-    EMAILS_FROM_EMAIL: Union[EmailStr, None] = config("EMAILS_FROM_EMAIL", default=None)
-    EMAILS_FROM_NAME: Union[str, None] = config("EMAILS_FROM_NAME", default=None)
+    SMTP_TLS: bool = config("SMTP_TLS", cast=bool, default=True)
+    SMTP_PORT: Optional[int] = config("SMTP_PORT", cast=int, default=None)
+    SMTP_HOST: Optional[str] = config("SMTP_HOST", default=None)
+    SMTP_USER: Optional[str] = config("SMTP_USER", default=None)
+    SMTP_PASSWORD: Optional[str] = config("SMTP_PASSWORD", default=None)
+    EMAILS_FROM_EMAIL: Optional[EmailStr] = config("EMAILS_FROM_EMAIL", default=None)
+    EMAILS_FROM_NAME: Optional[str] = config("EMAILS_FROM_NAME", default=None)
 
     # --------------------------------------------------------------------------
     #
